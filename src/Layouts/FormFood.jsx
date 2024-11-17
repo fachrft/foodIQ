@@ -34,7 +34,7 @@ const FormFood = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:5000/food/search",
+                "https://food-iq-api.vercel.app/food/search",
                 {
                     search: searchTerm,
                 },

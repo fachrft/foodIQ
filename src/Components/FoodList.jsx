@@ -38,7 +38,7 @@ const FoodList = ({ foods, updateDetailFood }) => {
 
     const getFoodById = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:5000/food/search/${id}`, {
+            const response = await axios.post(`https://food-iq-api.vercel.app/food/search/${id}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",

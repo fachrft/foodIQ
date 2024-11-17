@@ -40,7 +40,7 @@ const RecipeList = ({ recipes, updateDetailRecipe }) => {
 
     const getRecipeById = async (id) => {
         try {
-            const response = await axios.post(`http://localhost:5000/food/recipes/${id}`, {
+            const response = await axios.post(`https://food-iq-api.vercel.app/food/recipes/${id}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "application/json",

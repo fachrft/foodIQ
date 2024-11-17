@@ -23,7 +23,7 @@ function ProfileForm() {
         hasil = Math.floor(hasil);
         const cetakKalori = `Kalori yang anda butuhkan per hari sebanyak ${hasil} Kalori`
     
-        const token = await axios.post('http://localhost:5000/food/get-token')
+        const token = await axios.post('https://food-iq-api.vercel.app/food/get-token')
         // console.log(token)
 
         // Simpan data ke localStorage sebagai JSON
