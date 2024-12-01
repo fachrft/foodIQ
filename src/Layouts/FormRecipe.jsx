@@ -80,9 +80,9 @@ const FormRecipe = () => {
     return (
         <div className="h-screen bg-gray-100 relative overflow-x-hidden">
             <div className="flex justify-center items-center absolute w-full translate-x-14">
-                <img src={food} alt="background" className="inset-0 h-full object-cover" />
+                <img src={food} alt="background" className="hidden md:block inset-0 h-auto object-cover" />
             </div>
-            <div className="flex justify-between px-20">
+            <div className="flex gap-10 px-10 flex-wrap md:flex-row">
                 <div className="flex flex-col gap-5 pt-6">
                     <div className="bg-white shadow-lg rounded-lg p-8 w-full h-[500px] max-w-md z-20">
                         <h2 className="text-2xl font-bold mb-6 text-gray-800">Search Recipes</h2>

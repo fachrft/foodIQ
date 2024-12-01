@@ -5,26 +5,38 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const FoodDetail = ({ foods }) => {
-    const [selectedPortion, setSelectedPortion] = useState(""); // Menyimpan pilihan user
-    const [nutritionData, setNutritionData] = useState(null); // Menyimpan data nutrisi berdasarkan pilihan user
+    const initialPortion = foods?.servings?.serving?.[0]?.serving_description || ""; // Pilihan awal
+    const [selectedPortion, setSelectedPortion] = useState(initialPortion);
+    const [nutritionData, setNutritionData] = useState(null);
 
-    // Pastikan foods dan foods.servings ada sebelum kita mencoba menggunakan data
+    // console.log(foods.servings.serving);
+
+    useEffect(() => {
+        if (initialPortion) {
+            const selectedServing = foods.servings.serving.find((s) => s.serving_description === initialPortion);
+            if (selectedServing) {
+                setNutritionData({
+                    calories: selectedServing.calories,
+                    fat: selectedServing.fat,
+                    carbohydrate: selectedServing.carbohydrate,
+                    protein: selectedServing.protein,
+                });
+            }
+        }
+    }, [initialPortion, foods]);
+
     if (!foods || !foods.servings || !foods.servings.serving) {
-        return <div>Loading...</div>; // Menampilkan loading jika data belum tersedia
+        return <div></div>;
     }
 
-    // Data untuk dropdown (serving descriptions)
     const portionOptions = foods.servings.serving.map((s) => s.serving_description);
 
-    // Fungsi untuk menangani perubahan pilihan user
     const handlePortionChange = (e) => {
         const selectedDescription = e.target.value;
         setSelectedPortion(selectedDescription);
 
-        // Mencari data yang sesuai dengan pilihan user
         const selectedServing = foods.servings.serving.find((s) => s.serving_description === selectedDescription);
 
-        // Menyimpan data nutrisi yang sesuai
         if (selectedServing) {
             setNutritionData({
                 calories: selectedServing.calories,
@@ -35,9 +47,8 @@ const FoodDetail = ({ foods }) => {
         }
     };
 
-    // Fungsi untuk menghitung persentase dan menyiapkan data chart
     function calculateNutritionPercentages(data) {
-        if (!data) return {}; // Jika data kosong, jangan lakukan perhitungan
+        if (!data) return {};
 
         const nutritionValues = {
             fat: parseFloat(data.fat),
@@ -47,33 +58,27 @@ const FoodDetail = ({ foods }) => {
 
         const total = nutritionValues.fat + nutritionValues.carbohydrate + nutritionValues.protein;
 
-        // Menghitung persentase nutrisi terhadap total
-        const percentage = {
+        return {
             labels: ["Fat", "Carbohydrate", "Protein"],
             datasets: [
                 {
                     label: "Nutrition Distribution",
                     data: [((nutritionValues.fat / total) * 100).toFixed(2), ((nutritionValues.carbohydrate / total) * 100).toFixed(2), ((nutritionValues.protein / total) * 100).toFixed(2)],
-                    backgroundColor: ["yellow", "red", "blue"], // Warna untuk masing-masing bagian
-                    borderColor: ["#fff", "#fff", "#fff"], // Warna border
+                    backgroundColor: ["yellow", "red", "blue"],
+                    borderColor: ["#fff", "#fff", "#fff"],
                     borderWidth: 2,
                 },
             ],
         };
-
-        return percentage;
     }
 
-    // Menyiapkan data chart yang terupdate setiap kali nutritionData berubah
     const chartData = calculateNutritionPercentages(nutritionData);
 
     return (
-        <div className="max-w-xl mx-auto p-4 z-20 bg-white mt-8 pt-10">
+        <div className="max-w-xl mx-auto p-4 z-20 bg-white h-[110vh] rounded-xl mt-8 pt-10">
             <h2 className="text-xl font-semibold mb-4">{foods.food_name}</h2>
 
-            {/* Dropdown untuk memilih portion */}
             <select value={selectedPortion} onChange={handlePortionChange} className="w-full p-2 border border-gray-300 rounded mb-6">
-                <option value="">Select a portion</option>
                 {portionOptions.map((portion, index) => (
                     <option key={index} value={portion}>
                         {portion}
@@ -81,28 +86,29 @@ const FoodDetail = ({ foods }) => {
                 ))}
             </select>
 
-            {/* Menampilkan grafik jika data nutrisi sudah dipilih */}
             {nutritionData && (
-                <div className="mt-6">
+                <div className="mt-6 flex flex-col justify-center items-center">
                     <h3 className="text-lg font-semibold mb-4">Nutrition Distribution (in %)</h3>
-                    <div className="">
+                    <div>
                         <Doughnut data={chartData} />
                     </div>
                 </div>
             )}
 
-            {/* Menampilkan informasi nutrisi dalam bentuk persentase */}
             {nutritionData && (
                 <div className="mt-4">
                     <ul>
-                        <li>
-                            <strong>Fat:</strong> {((parseFloat(nutritionData.fat) / (parseFloat(nutritionData.fat) + parseFloat(nutritionData.carbohydrate) + parseFloat(nutritionData.protein))) * 100).toFixed(2)}%
+                        <li className="text-3xl text-center mb-10">
+                            <strong>Calories:</strong> {parseFloat(nutritionData.calories).toFixed(2)} g
                         </li>
-                        <li>
-                            <strong>Carbohydrate:</strong> {((parseFloat(nutritionData.carbohydrate) / (parseFloat(nutritionData.fat) + parseFloat(nutritionData.carbohydrate) + parseFloat(nutritionData.protein))) * 100).toFixed(2)}%
+                        <li className="text-xl">
+                            <strong>Fat:</strong> {parseFloat(nutritionData.fat).toFixed(2)} g
                         </li>
-                        <li>
-                            <strong>Protein:</strong> {((parseFloat(nutritionData.protein) / (parseFloat(nutritionData.fat) + parseFloat(nutritionData.carbohydrate) + parseFloat(nutritionData.protein))) * 100).toFixed(2)}%
+                        <li className="text-xl">
+                            <strong>Carbohydrate:</strong> {parseFloat(nutritionData.carbohydrate).toFixed(2)} g
+                        </li>
+                        <li className="text-xl">
+                            <strong>Protein:</strong> {parseFloat(nutritionData.protein).toFixed(2)} g
                         </li>
                     </ul>
                 </div>

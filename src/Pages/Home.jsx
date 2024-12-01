@@ -23,15 +23,15 @@ function Home() {
     // Fungsi validasi BMI
     const renderBMIMessage = () => {
         if (bmi < 18.5) {
-            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (underweight)." />;
+            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (underweight)." kalori={kalori} />;
         } else if (bmi >= 18.5 && bmi <= 22.9) {
             return <Info color="bg-[#86D293]" image={aman} warning="Berat badan kamu terindikasi (normal)."  kalori={kalori}/>;
         } else if (bmi >= 23 && bmi <= 24.9 ) {
-            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (overweight)." />;            
+            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (overweight)." kalori={kalori}/>;            
         } else if (bmi >= 25 && bmi <= 29.9) {
-            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (Obesitas)." />;
+            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (Obesitas)." kalori={kalori} />;
         } else {
-            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (Obesitas II)." />;
+            return <Info color="bg-red-500" image={warning} warning="Berat badan kamu terindikasi (Obesitas II)." kalori={kalori} />;
         }
     };
 

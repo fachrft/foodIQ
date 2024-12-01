@@ -18,9 +18,9 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/register" element={<Regis />} />
                 <Route path="/food" element={<SearchFood/>}/>
                 <Route path="/recipe" element={<SearchRecipe />} />
+                <Route path="/register" element={<Regis />} />
             </Routes>
         </Router>
     );

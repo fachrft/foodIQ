@@ -5,6 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const RecipeDetail = ({ recipes }) => {
+    console.log(recipes);
     if (!recipes) {
         return null; // Tidak merender apa pun jika recipes tidak ada
     }
@@ -39,7 +40,7 @@ const RecipeDetail = ({ recipes }) => {
     const chartData = calculateNutritionPercentages(recipes);
     const options = {};
     return (
-        <div className="bg-gray-100 min-h-screen flex justify-center items-center z-20">
+        <div className="bg-gray-100 min-h-screen flex justify-center items-center pt-5 z-20">
             <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl w-full ">
                 {/* Recipe Title */}
                 <h1 className="text-2xl font-bold text-gray-800">{recipes.recipe_name}</h1>
@@ -109,7 +110,7 @@ const RecipeDetail = ({ recipes }) => {
                 {/* Nutrition Info */}
                 <div className="mt-6">
                     <h2 className="text-lg font-semibold text-gray-800">Per Serving</h2>
-                    <div className="flex items-center mt-5">
+                    <div className="flex items-center mt-5 flex-wrap gap-5 md:gap-0">
                         {/* Nutrition Chart */}
                         <div className="">
                             <Doughnut data={chartData} option={options}></Doughnut>
@@ -128,6 +129,9 @@ const RecipeDetail = ({ recipes }) => {
                             </p>
                         </div>
                     </div>
+                </div>
+                <div className="text-center mt-4 text-3xl">
+                    <h1><strong>Calories</strong> {recipes.serving_sizes.serving.calories} Kal</h1>
                 </div>
             </div>
         </div>

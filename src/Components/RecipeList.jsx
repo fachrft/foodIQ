@@ -47,6 +47,7 @@ const RecipeList = ({ recipes, updateDetailRecipe }) => {
                 },
             });
             const detail = response.data.recipe;
+            // console.log(detail)
             setDetailRecipe(detail); // Local state
             updateDetailRecipe(detail); // Update parent state
         } catch (error) {
