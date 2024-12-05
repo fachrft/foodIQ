@@ -21,7 +21,7 @@ function Navbar() {
                 </div>
 
                 {/* Menu for large screens */}
-                <div className="hidden md:flex space-x-8">
+                <div className="hidden md:flex md:justify-center md:items-center space-x-8">
                     <a href="#" className="text-gray-700 hover:text-green-700 transition-colors duration-300">
                         Home
                     </a>
