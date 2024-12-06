@@ -9,8 +9,6 @@ const FoodDetail = ({ foods }) => {
     const [selectedPortion, setSelectedPortion] = useState(initialPortion);
     const [nutritionData, setNutritionData] = useState(null);
 
-    // console.log(foods.servings.serving);
-
     useEffect(() => {
         if (initialPortion) {
             const selectedServing = foods.servings.serving.find((s) => s.serving_description === initialPortion);
@@ -63,7 +61,9 @@ const FoodDetail = ({ foods }) => {
             datasets: [
                 {
                     label: "Nutrition Distribution",
-                    data: [((nutritionValues.fat / total) * 100).toFixed(2), ((nutritionValues.carbohydrate / total) * 100).toFixed(2), ((nutritionValues.protein / total) * 100).toFixed(2)],
+                    data: [
+                        nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein
+                    ],
                     backgroundColor: ["yellow", "red", "blue"],
                     borderColor: ["#fff", "#fff", "#fff"],
                     borderWidth: 2,
@@ -97,24 +97,27 @@ const FoodDetail = ({ foods }) => {
 
             {nutritionData && (
                 <div className="mt-4">
-                    <ul>
-                        <li className="text-3xl text-center mb-10">
-                            <strong>Calories:</strong> {parseFloat(nutritionData.calories).toFixed(2)} g
-                        </li>
-                        <li className="text-xl">
-                            <strong>Fat:</strong> {parseFloat(nutritionData.fat).toFixed(2)} g
-                        </li>
-                        <li className="text-xl">
-                            <strong>Carbohydrate:</strong> {parseFloat(nutritionData.carbohydrate).toFixed(2)} g
-                        </li>
-                        <li className="text-xl">
-                            <strong>Protein:</strong> {parseFloat(nutritionData.protein).toFixed(2)} g
-                        </li>
-                    </ul>
+                    <div className="ml-6 text-gray-700">
+                        <p>
+                            <span className="text-yellow-500 font-bold">{parseFloat(((nutritionData.fat / (nutritionData.calories || 1)) * 100).toFixed(2))}% Fat:</span>{" "}
+                            <span className="font-bold text-black">{parseFloat(nutritionData.fat).toFixed(2)} g</span>
+                        </p>
+                        <p>
+                            <span className="text-red-500 font-bold">{parseFloat(((nutritionData.carbohydrate / (nutritionData.calories || 1)) * 100).toFixed(2))}% Carbs:</span>{" "}
+                            <span className="font-bold text-black">{parseFloat(nutritionData.carbohydrate).toFixed(2)} g</span>
+                        </p>
+                        <p>
+                            <span className="text-blue-500 font-bold">{parseFloat(((nutritionData.protein / (nutritionData.calories || 1)) * 100).toFixed(2))}% Protein:</span>{" "}
+                            <span className="font-bold text-black">{parseFloat(nutritionData.protein).toFixed(2)} g</span>
+                        </p>
+                    </div>
+                    <div className="text-center text-3xl mt-4">
+                        <strong>Calories:</strong> <span className="font-bold text-black">{parseFloat(nutritionData.calories).toFixed(2)} Kal</span>
+                    </div>
                 </div>
             )}
         </div>
     );
 };
 
-export default FoodDetail;
+export default FoodDetail

@@ -20,7 +20,7 @@ const RecipeDetail = ({ recipes }) => {
         };
 
         // Menghitung total
-        const total = Object.values(nutritionValues).reduce((a, b) => a + b, 0);
+        const calories = recipes.serving_sizes.serving.calories
 
         // Menghitung persentase
         const persentage = {
@@ -30,7 +30,7 @@ const RecipeDetail = ({ recipes }) => {
                     label: "Nutrition",
                     data: [nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein],
                     backgroundColor: ["yellow", "red", "blue"],
-                    presentase: [parseFloat(((nutritionValues.fat / total) * 100).toFixed(2)), parseFloat(((nutritionValues.carbohydrate / total) * 100).toFixed(2)), parseFloat(((nutritionValues.protein / total) * 100).toFixed(2))],
+                    presentase: [parseFloat(((nutritionValues.fat / calories) * 100).toFixed(2)), parseFloat(((nutritionValues.carbohydrate / calories) * 100).toFixed(2)), parseFloat(((nutritionValues.protein / calories) * 100).toFixed(2))],
                 },
             ],
         };
