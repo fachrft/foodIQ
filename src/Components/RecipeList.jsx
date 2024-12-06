@@ -50,6 +50,7 @@ const RecipeList = ({ recipes, updateDetailRecipe }) => {
             // console.log(detail)
             setDetailRecipe(detail); // Local state
             updateDetailRecipe(detail); // Update parent state
+            document.getElementById("detail-recipe").scrollIntoView({ behavior: "smooth" });
         } catch (error) {
             console.error("Error saat melakukan request:", error.response?.data || error.message);
         }

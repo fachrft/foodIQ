@@ -44,9 +44,9 @@ const FoodList = ({ foods, updateDetailFood }) => {
                     "Content-Type": "application/json",
                 },
             });
-            // console.log(response.data.food)
             const detail = response.data.food;
             updateDetailFood(detail);
+            document.getElementById("detail-food").scrollIntoView({ behavior: "smooth" });
         } catch (error) {
             console.error("Error saat melakukan request:", error.response?.data || error.message);
         }

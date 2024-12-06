@@ -75,7 +75,7 @@ const FoodDetail = ({ foods }) => {
     const chartData = calculateNutritionPercentages(nutritionData);
 
     return (
-        <div className="max-w-xl mx-auto p-4 z-20 bg-white h-[110vh] rounded-xl mt-8 pt-10">
+        <div className="max-w-xl mx-auto p-4 z-20 bg-white h-[110vh] rounded-xl mt-8 pt-10" id="detail-food">
             <h2 className="text-xl font-semibold mb-4">{foods.food_name}</h2>
 
             <select value={selectedPortion} onChange={handlePortionChange} className="w-full p-2 border border-gray-300 rounded mb-6">

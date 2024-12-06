@@ -40,7 +40,7 @@ const RecipeDetail = ({ recipes }) => {
     const chartData = calculateNutritionPercentages(recipes);
     const options = {};
     return (
-        <div className="bg-gray-100 min-h-screen flex justify-center items-center pt-5 z-20">
+        <div className="bg-gray-100 min-h-screen flex justify-center items-center pt-5 z-20" id="detail-recipe">
             <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl w-full ">
                 {/* Recipe Title */}
                 <h1 className="text-2xl font-bold text-gray-800">{recipes.recipe_name}</h1>
