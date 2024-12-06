@@ -45,7 +45,7 @@ function ProfileForm() {
             </div>
             <div className="relative">
                 <div className="absolute">
-                    <img className="scale-[2.8] md:scale-[1.16] md:translate-x-24 md:translate-y-20 h-[100vh]" src={BG} alt="" />
+                    <img className="scale-[3.3] md:scale-[1.16] md:translate-x-24 md:translate-y-20 h-[100vh]" src={BG} alt="" />
                 </div>
                 <div>
                     <form className="relative z-10 px-5 pt-24 max-w-sm md:max-w-md w-full mx-auto" onSubmit={handleSubmit}>
