@@ -30,7 +30,11 @@ const RecipeDetail = ({ recipes }) => {
                     label: "Nutrition",
                     data: [nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein],
                     backgroundColor: ["yellow", "red", "blue"],
-                    presentase: [parseFloat(((nutritionValues.fat / calories) * 100).toFixed(2)), parseFloat(((nutritionValues.carbohydrate / calories) * 100).toFixed(2)), parseFloat(((nutritionValues.protein / calories) * 100).toFixed(2))],
+                    presentase: [
+                        parseFloat(((nutritionValues.fat * 9 / calories) * 100).toFixed(2)),      // Persentase kalori dari lemak
+                        parseFloat(((nutritionValues.carbohydrate * 4 / calories) * 100).toFixed(2)), // Persentase kalori dari karbohidrat
+                        parseFloat(((nutritionValues.protein * 4 / calories) * 100).toFixed(2)) // Persentase kalori dari protein
+                    ],
                 },
             ],
         };

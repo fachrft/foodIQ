@@ -54,16 +54,12 @@ const FoodDetail = ({ foods }) => {
             protein: parseFloat(data.protein),
         };
 
-        const total = nutritionValues.fat + nutritionValues.carbohydrate + nutritionValues.protein;
-
         return {
             labels: ["Fat", "Carbohydrate", "Protein"],
             datasets: [
                 {
                     label: "Nutrition Distribution",
-                    data: [
-                        nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein
-                    ],
+                    data: [nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein],
                     backgroundColor: ["yellow", "red", "blue"],
                     borderColor: ["#fff", "#fff", "#fff"],
                     borderWidth: 2,
@@ -99,15 +95,15 @@ const FoodDetail = ({ foods }) => {
                 <div className="mt-4">
                     <div className="ml-6 text-gray-700">
                         <p>
-                            <span className="text-yellow-500 font-bold">{parseFloat(((nutritionData.fat / (nutritionData.calories || 1)) * 100).toFixed(2))}% Fat:</span>{" "}
+                            <span className="text-yellow-500 font-bold">{parseFloat(((nutritionData.fat * 9) / (nutritionData.calories || 1)) * 100).toFixed(2)}% Fat:</span>{" "}
                             <span className="font-bold text-black">{parseFloat(nutritionData.fat).toFixed(2)} g</span>
                         </p>
                         <p>
-                            <span className="text-red-500 font-bold">{parseFloat(((nutritionData.carbohydrate / (nutritionData.calories || 1)) * 100).toFixed(2))}% Carbs:</span>{" "}
+                            <span className="text-red-500 font-bold">{parseFloat(((nutritionData.carbohydrate * 4) / (nutritionData.calories || 1)) * 100).toFixed(2)}% Carbs:</span>{" "}
                             <span className="font-bold text-black">{parseFloat(nutritionData.carbohydrate).toFixed(2)} g</span>
                         </p>
                         <p>
-                            <span className="text-blue-500 font-bold">{parseFloat(((nutritionData.protein / (nutritionData.calories || 1)) * 100).toFixed(2))}% Protein:</span>{" "}
+                            <span className="text-blue-500 font-bold">{parseFloat(((nutritionData.protein * 4) / (nutritionData.calories || 1)) * 100).toFixed(2)}% Protein:</span>{" "}
                             <span className="font-bold text-black">{parseFloat(nutritionData.protein).toFixed(2)} g</span>
                         </p>
                     </div>
@@ -120,4 +116,4 @@ const FoodDetail = ({ foods }) => {
     );
 };
 
-export default FoodDetail
+export default FoodDetail;
