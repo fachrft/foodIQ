@@ -4,7 +4,7 @@ import React from "react";
 const Info = ({ image, warning, color, kalori }) => {
     return (
         <div className="mt-8 flex justify-center">
-            <button className={`flex items-center ${color} h-[79px] md:w-[480px] md:h-[88px] text-white font-semibold px-8 py-3 rounded-3xl shadow-lg hover:bg-green-600 transition-all duration-300 gap-4`}>
+            <button className={`flex items-center ${color}  md:max-w-md md:h-[88px] text-white font-semibold px-3 md:px-9 py-3 rounded-3xl shadow-lg hover:bg-green-600 transition-all duration-300 gap-4`}>
                 <img src={image} className="w-10" alt="" />
                 <div>
                     <p className="text-md">{warning}</p>
