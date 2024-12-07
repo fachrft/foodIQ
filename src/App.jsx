@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Index from "./Path/Index";
 import Regis from "./Path/Regis";
-import ProtectedRoute from "./Path/ProtectedRoute"; // import ProtectedRoute
+import ProtectedRoute from "./Path/ProtectedRoute";
 import SearchRecipe from "./Pages/SearchRecipe";
 import SearchFood from "./Pages/SearchFood";
 
@@ -18,8 +18,22 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="/food" element={<SearchFood/>}/>
-                <Route path="/recipe" element={<SearchRecipe />} />
+                <Route
+                    path="/food"
+                    element={
+                        <ProtectedRoute>
+                            <SearchFood />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/recipe"
+                    element={
+                        <ProtectedRoute>
+                            <SearchRecipe />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route path="/register" element={<Regis />} />
             </Routes>
         </Router>

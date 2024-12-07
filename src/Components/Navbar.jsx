@@ -8,7 +8,7 @@ function Navbar() {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        localStorage.removeItem("hasiPerhitungan");
+        localStorage.removeItem("hasilPerhitungan");
         navigate("/register");
     };
 
