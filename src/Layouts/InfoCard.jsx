@@ -1,24 +1,27 @@
 import React from "react";
-import { FaUtensils } from "react-icons/fa"; // Icon untuk simbol food
 import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 function InfoCard({ image, title, desc, link }) {
     return (
-        <div className="max-w-md md:max-w-lg p-12 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2 hover:scale-105">
+        <div className="flex-1 min-w-[300px] max-w-md p-8 bg-white rounded-[2rem] border border-gray-100 shadow-lg hover:shadow-2xl hover:shadow-green-900/10 transition-all duration-300 group">
             {/* Icon */}
-            <div className="flex justify-center items-center w-20 h-20 bg-blue-100 rounded-full mb-6 transition-transform duration-300 transform hover:scale-110">
-                <img src={image} alt="" />
+            <div className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:bg-green-100">
+                <img src={image} alt={title} className="w-10 h-10 object-contain" />
             </div>
 
             {/* Title */}
-            <h2 className="text-2xl font-semibold">{title}</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">{title}</h2>
 
             {/* Description */}
-            <p className="text-gray-500 mt-3 text-lg">{desc}</p>
+            <p className="text-gray-500 leading-relaxed mb-8 h-24 overflow-hidden">{desc}</p>
 
             {/* Button */}
-            <Link to={link}>
-                <button className="w-full mt-8 bg-blue-600 text-white font-semibold py-3 rounded-full shadow-md hover:bg-blue-700 transition-colors duration-300 text-lg">More</button>
+            <Link to={link} className="inline-block w-full">
+                <button className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white font-semibold py-4 rounded-xl shadow-lg hover:bg-green-600 hover:shadow-green-500/30 transition-all duration-300 group-hover:translate-y-[-2px]">
+                    <span>Explore Now</span>
+                    <ArrowRightIcon className="w-5 h-5" />
+                </button>
             </Link>
         </div>
     );

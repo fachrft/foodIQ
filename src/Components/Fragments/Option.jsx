@@ -1,9 +1,9 @@
-const Option = ({ label, options, value, onChange }) => {
+const Option = ({ label, options, value, onChange, className = "" }) => {
     return (
-      <div className="mb-4">
+      <div className={`mb-4 ${className}`}>
         <label className="block text-gray-700 font-semibold mb-1">{label}</label>
         <select
-          className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 shadow-sm appearance-none"
           value={value}
           onChange={onChange}
         >
@@ -21,4 +21,3 @@ const Option = ({ label, options, value, onChange }) => {
   };
   
   export default Option;
-  

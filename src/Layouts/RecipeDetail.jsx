@@ -1,141 +1,184 @@
-import { useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const RecipeDetail = ({ recipes }) => {
-    console.log(recipes);
     if (!recipes) {
-        return null; // Tidak merender apa pun jika recipes tidak ada
+        return null;
     }
 
     function calculateNutritionPercentages(data) {
-        // Mengambil nilai yang dibutuhkan
-        // console.log(data)
         const nutritionValues = {
             fat: parseFloat(data.serving_sizes.serving.fat),
             carbohydrate: parseFloat(data.serving_sizes.serving.carbohydrate),
             protein: parseFloat(data.serving_sizes.serving.protein),
         };
 
-        // Menghitung total
-        const calories = recipes.serving_sizes.serving.calories
+        const calories = recipes.serving_sizes.serving.calories;
 
-        // Menghitung persentase
-        const persentage = {
-            labels: ["fat", "carbo", "protein"],
+        return {
+            labels: ["Fat", "Carbohydrate", "Protein"],
             datasets: [
                 {
                     label: "Nutrition",
                     data: [nutritionValues.fat, nutritionValues.carbohydrate, nutritionValues.protein],
-                    backgroundColor: ["yellow", "red", "blue"],
+                    backgroundColor: ["#FACC15", "#EF4444", "#3B82F6"],
+                    borderColor: ["#fff", "#fff", "#fff"],
+                    borderWidth: 2,
                     presentase: [
-                        parseFloat(((nutritionValues.fat * 9 / calories) * 100).toFixed(2)),      // Persentase kalori dari lemak
-                        parseFloat(((nutritionValues.carbohydrate * 4 / calories) * 100).toFixed(2)), // Persentase kalori dari karbohidrat
-                        parseFloat(((nutritionValues.protein * 4 / calories) * 100).toFixed(2)) // Persentase kalori dari protein
+                        parseFloat(((nutritionValues.fat * 9 / calories) * 100).toFixed(2)),
+                        parseFloat(((nutritionValues.carbohydrate * 4 / calories) * 100).toFixed(2)),
+                        parseFloat(((nutritionValues.protein * 4 / calories) * 100).toFixed(2))
                     ],
                 },
             ],
         };
-
-        return persentage;
     }
+
     const chartData = calculateNutritionPercentages(recipes);
-    const options = {};
+
     return (
-        <div className="bg-gray-100 min-h-screen flex justify-center items-center pt-5 z-20" id="detail-recipe">
-            <div className="bg-white rounded-lg shadow-md p-6 max-w-3xl w-full ">
-                {/* Recipe Title */}
-                <h1 className="text-2xl font-bold text-gray-800">{recipes.recipe_name}</h1>
-                <p className="text-gray-600 mt-1">{recipes.recipe_description}</p>
-
-                {/* Recipe Image */}
-                <div className="mt-4">
-                    {recipes.recipe_images && recipes.recipe_images.recipe_image && recipes.recipe_images.recipe_image.length > 0 ? (
-                        <img
-                            src={recipes.recipe_images.recipe_image[0]} // Mengakses elemen pertama dalam array recipe_image
-                            alt="Baked Lemon Snapper"
-                            className="rounded-md object-cover"
-                        />
-                    ) : (
-                        <p>Data belum tersedia</p>
-                    )}
-                </div>
-                {/* Recipe Info */}
-                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 border p-4 rounded-lg bg-gray-50">
-                    <div className="text-gray-700">
-                        <p>
-                            <strong>Yields:</strong> {recipes.number_of_servings}
-                        </p>
-                    </div>
-                    <div className="text-gray-700">
-                        <p>
-                            <strong>Prep Time:</strong> {recipes.preparation_time_min} minutes
-                        </p>
-                    </div>
-                    <div className="text-gray-700">
-                        <p>
-                            <strong>Cook Time:</strong> {recipes.cooking_time_min} minutes
-                        </p>
-                    </div>
-                    <div className="text-gray-700">
-                        <p>
-                            <strong>Meal Types: </strong>
-                            {recipes.recipe_types && recipes.recipe_types.recipe_type && recipes.recipe_types.recipe_type.length > 0 ? <span>{recipes.recipe_types.recipe_type.join(", ")}</span> : <p>Data Meal Types belum tersedia</p>}
-                        </p>
+        <div className="w-full space-y-8">
+            {/* Hero Image */}
+            {recipes.recipe_images?.recipe_image?.[0] && (
+                <div className="relative rounded-2xl overflow-hidden shadow-lg h-64 md:h-80">
+                    <img
+                        src={recipes.recipe_images.recipe_image[0]}
+                        alt={recipes.recipe_name}
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <p className="text-white/90 text-sm line-clamp-2">{recipes.recipe_description}</p>
                     </div>
                 </div>
+            )}
 
-                {/* Ingredients */}
-                <div className="mt-6">
-                    <h2 className="text-lg font-semibold text-gray-800">Ingredients</h2>
-                    <ul className="list-disc ml-6 mt-2 text-gray-700">
-                        {recipes.ingredients && recipes.ingredients.ingredient && recipes.ingredients.ingredient.length > 0 ? (
-                            recipes.ingredients.ingredient.map((ing, index) => <li key={index}>{ing.ingredient_description}</li>)
-                        ) : (
-                            <p>Data Ingredients belum tersedia</p>
-                        )}
-                    </ul>
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="bg-green-50 p-4 rounded-xl border border-green-100 text-center">
+                    <p className="text-green-600 text-xs font-bold uppercase tracking-wider mb-1">Yields</p>
+                    <p className="text-2xl font-bold text-gray-800">{recipes.number_of_servings}</p>
+                </div>
+                <div className="bg-orange-50 p-4 rounded-xl border border-orange-100 text-center">
+                    <p className="text-orange-600 text-xs font-bold uppercase tracking-wider mb-1">Prep</p>
+                    <p className="text-2xl font-bold text-gray-800">{recipes.preparation_time_min}m</p>
+                </div>
+                <div className="bg-red-50 p-4 rounded-xl border border-red-100 text-center">
+                    <p className="text-red-600 text-xs font-bold uppercase tracking-wider mb-1">Cook</p>
+                    <p className="text-2xl font-bold text-gray-800">{recipes.cooking_time_min}m</p>
+                </div>
+                <div className="bg-purple-50 p-4 rounded-xl border border-purple-100 text-center">
+                    <p className="text-purple-600 text-xs font-bold uppercase tracking-wider mb-1">Calories</p>
+                    <p className="text-2xl font-bold text-gray-800">{recipes.serving_sizes.serving.calories}</p>
+                </div>
+            </div>
+
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Left Column: Ingredients & Directions (2/3 width) */}
+                <div className="lg:col-span-2 space-y-8">
+                    {/* Ingredients */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span className="text-2xl">🥕</span>
+                            Ingredients
+                        </h2>
+                        <div className="bg-gray-50 rounded-2xl p-6">
+                            <ul className="space-y-3">
+                                {recipes.ingredients?.ingredient?.map((ing, index) => (
+                                    <li key={index} className="flex items-start gap-3">
+                                        <div className="w-2 h-2 mt-2 rounded-full bg-green-500 flex-shrink-0"></div>
+                                        <span className="text-gray-700 leading-relaxed">{ing.ingredient_description}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+                    {/* Directions */}
+                    <div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <span className="text-2xl">🍳</span>
+                            Directions
+                        </h2>
+                        <div className="space-y-4">
+                            {recipes.directions?.direction?.map((dir, index) => (
+                                <div key={index} className="flex gap-4 bg-white rounded-xl p-4 border border-gray-100">
+                                    <div className="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-md">
+                                        {index + 1}
+                                    </div>
+                                    <p className="text-gray-700 leading-relaxed pt-1">{dir.direction_description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
-                {/* Directions */}
-                <div className="mt-6">
-                    <h2 className="text-lg font-semibold text-gray-800">Directions</h2>
-                    <ol className="list-decimal ml-6 mt-2 text-gray-700">
-                        {recipes.directions && recipes.directions.direction && recipes.directions.direction.length > 0 ? (
-                            recipes.directions.direction.map((dir, index) => <li key={index}>{dir.direction_description}</li>)
-                        ) : (
-                            <p>Data Directions belum tersedia</p>
-                        )}
-                    </ol>
-                </div>
-
-                {/* Nutrition Info */}
-                <div className="mt-6">
-                    <h2 className="text-lg font-semibold text-gray-800">Per Serving</h2>
-                    <div className="flex items-center mt-5 flex-wrap gap-5 md:gap-0">
-                        {/* Nutrition Chart */}
-                        <div className="">
-                            <Doughnut data={chartData} option={options}></Doughnut>
+                {/* Right Column: Nutrition (1/3 width) */}
+                <div className="lg:col-span-1">
+                    <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 border border-gray-100 sticky top-4">
+                        <h3 className="text-xl font-bold text-gray-800 mb-6 text-center">Nutrition Facts</h3>
+                        
+                        {/* Chart */}
+                        <div className="w-48 h-48 mx-auto mb-6 relative">
+                            <Doughnut 
+                                data={chartData} 
+                                options={{ 
+                                    maintainAspectRatio: true,
+                                    plugins: {
+                                        legend: {
+                                            display: false
+                                        }
+                                    }
+                                }} 
+                            />
                         </div>
 
                         {/* Nutrition Details */}
-                        <div className="ml-6 text-gray-700">
-                            <p>
-                                <span className="text-yellow-500 font-bold">{chartData.datasets[0].presentase[0]}% Fat:</span> <span className="font-bold text-black">{chartData.datasets[0].data[0]}g</span>
-                            </p>
-                            <p>
-                                <span className="text-red-500 font-bold">{chartData.datasets[0].presentase[1]}% Carbs:</span> <span className="font-bold text-black">{chartData.datasets[0].data[1]}g</span>
-                            </p>
-                            <p>
-                                <span className="text-blue-500 font-bold">{chartData.datasets[0].presentase[2]}% Protein:</span> <span className="font-bold text-black">{chartData.datasets[0].data[2]}g</span>
-                            </p>
+                        <div className="space-y-3">
+                            <div className="flex justify-between items-center p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <span className="text-gray-700 font-medium text-sm">Fat</span>
+                                </div>
+                                <div className="text-right">
+                                    <span className="block font-bold text-gray-800">{chartData.datasets[0].data[0]}g</span>
+                                    <span className="text-xs text-gray-400">{chartData.datasets[0].presentase[0]}%</span>
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <span className="text-gray-700 font-medium text-sm">Carbs</span>
+                                </div>
+                                <div className="text-right">
+                                    <span className="block font-bold text-gray-800">{chartData.datasets[0].data[1]}g</span>
+                                    <span className="text-xs text-gray-400">{chartData.datasets[0].presentase[1]}%</span>
+                                </div>
+                            </div>
+                            <div className="flex justify-between items-center p-3 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                                    <span className="text-gray-700 font-medium text-sm">Protein</span>
+                                </div>
+                                <div className="text-right">
+                                    <span className="block font-bold text-gray-800">{chartData.datasets[0].data[2]}g</span>
+                                    <span className="text-xs text-gray-400">{chartData.datasets[0].presentase[2]}%</span>
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Recipe Type Badge */}
+                        {recipes.recipe_types?.recipe_type?.[0] && (
+                            <div className="mt-6 text-center">
+                                <span className="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium">
+                                    {recipes.recipe_types.recipe_type[0]}
+                                </span>
+                            </div>
+                        )}
                     </div>
-                </div>
-                <div className="text-center mt-4 text-3xl">
-                    <h1><strong>Calories</strong> {recipes.serving_sizes.serving.calories} Kal</h1>
                 </div>
             </div>
         </div>

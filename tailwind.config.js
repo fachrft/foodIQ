@@ -8,7 +8,10 @@ export default {
                   500: "#4DB868", // Hijau untuk tombol
                   700: "#34A853", // Hijau untuk judul
                 },
-              },
+            },
+            fontFamily: {
+                poppins: ["Poppins", "sans-serif"],
+            },
         },
     },
     plugins: [],

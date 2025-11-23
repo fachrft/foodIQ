@@ -7,3 +7,30 @@
 .poppins {
     font-family: "Poppins", sans-serif;
 }
+
+@layer utilities {
+  .animate-bounce-slow {
+    animation: bounce-slow 3s infinite;
+  }
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+  }
+  .animate-loading-bar {
+    animation: loading-bar 2s ease-in-out forwards;
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: rotate(45deg) translateY(-5%); }
+  50% { transform: rotate(45deg) translateY(5%); }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes loading-bar {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}

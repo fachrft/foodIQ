@@ -21,7 +21,7 @@ const App = () => {
                 <Route
                     path="/food"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute> 
                             <SearchFood />
                         </ProtectedRoute>
                     }
